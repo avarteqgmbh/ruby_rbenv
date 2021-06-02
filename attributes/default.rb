@@ -56,7 +56,11 @@ when 'rhel', 'fedora'
   default['rbenv']['install_pkgs'] = %w(git grep)
   default['rbenv']['user_home_root'] = '/home'
 when 'debian', 'suse'
-  default['rbenv']['install_pkgs'] = %w(git-core grep)
+  if platform?('ubuntu') && node['platform_version'].to_i >=18
+    default['rbenv']['install_pkgs'] = %w(git grep)
+  else
+    default['rbenv']['install_pkgs'] = %w(git-core grep)
+  end
   default['rbenv']['user_home_root'] = '/home'
 when 'mac_os_x'
   default['rbenv']['install_pkgs'] = %w(git)
